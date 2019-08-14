@@ -1,0 +1,76 @@
+<?php
+/*------------------------------------------------------------------------
+ # SM Scroller - Version 1.1
+ # Copyright (c) 2009-2011 YouTech Company. All Rights Reserved.
+ # @license - Copyrighted Commercial Software
+ # Author: YouTech Company
+ # Websites: http://www.smartaddons.com
+-------------------------------------------------------------------------*/
+?>
+<?php
+ $divid = rand().time();
+ $smarthelper= Mage::helper('scroller/utils');
+ $items = $this->getProducts();
+ $config = $this->getConfigObject();
+ ?>
+<?php if(count($items)>0):?>
+	<?php echo $this->getScriptTags(); ?>
+<style>
+#featured<?php echo $divid;?> div.caption p a {
+	color:<?php echo $config['product_title_color'];?>!important;
+	text-decoration:none;
+	font-family:'BebasNeueRegular';
+}
+.caption p span{
+	color:red;
+	margin-left:20px;
+}
+</style>
+
+<script language="javascript">
+//<CDATA[[
+$jsmart(document).ready(function($){
+    $('#featured<?php echo $divid;?>').orbit({          
+		 animation: '<?php echo $config['animation'];?>', //fade, horizontal-slide, vertical-slide
+		 animationSpeed: <?php echo $config['duration'];?>, //how fast animations are
+		 advanceSpeed: <?php echo $config['interval'];?>, //if timer advance is enabled, time between transitions 
+		 startClockOnMouseOut: false<?php //echo ($start_clock_on_mouseOut)?'true':'false';?>, //if timer should restart on MouseOut
+		 startClockOnMouseOutAfter:3000 <?php //echo $start_clock_on_mouseOutAfter;?>, //how long after mouseout timer should start again
+		 directionalNav: <?php echo ($config['prenext_show'])?'true':'false';?>, //manual advan cing directional navs
+		 captions: <?php echo ($config['product_title_disp'])?'true':'false';?>, //if has a title, will be placed at bottom
+		 captionAnimationSpeed: 800<?php //echo $caption_animation_speed;?>, //how quickly to animate in caption on load and between captioned and uncaptioned photos
+		 timer: <?php echo ($config['play'])?'true':'false';?>, //if the circular timer is wanted
+		 idDiv: '#featured<?php echo $divid;?>'
+	});	
+});
+ //]]>
+</script>
+	<?php if (!empty($config['title'])): ?>
+	<div class="block-title" style="font-size: 16px; font-weight: bold;"><?php echo $config['title']; ?></div>
+	<?php endif; ?>
+<!--Intro Text-->
+<?php if($config['pretext']): ?>
+<div style="text-align:left;">
+	<?php  echo $config['pretext'];?>
+</div>
+<br/>
+<?php endif;?>
+<!--End Intro Text-->
+
+<div class="ytc-content-slider" style="position: relative;">
+	<div id="featured<?php echo $divid;?>" style="width: <?php echo $config['product_image_width']?>px; height:<?php echo $config['product_image_height']?>px;">
+		<?php foreach($items as $item) {?>
+		  <img src="<?php echo $item['thumb']?>" caption="<?php echo $item['sub_title']?>" alt="<?php echo $item['title']?>" href="<?php echo $item['link'];?>" <?php echo $smarthelper->getTargetAttr($config['product_links_target']); ?>  <?php if(($config['product_price_disp'] == 1) &&($item['price']!='')){?> price="<?php echo htmlspecialchars($item['price']);}?>"/>
+        <?php } ?> 
+	</div>
+</div>
+<!--End Module-->
+<?php else: ?>
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php endif; ?>	
+<?php if($config['posttext']): ?>
+<br/>
+<div style="text-align:left">
+	<p><?php  echo $config['posttext'];?></p>
+</div>
+<?php endif;?>

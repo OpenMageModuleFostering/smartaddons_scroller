@@ -1,0 +1,26 @@
+<?xml version="1.0"?>   
+<layout version="1.0">
+	<default>
+        <reference name="head">
+        	<action method="addCss"><stylesheet>smartaddons/scroller/css/style.css</stylesheet></action>
+        </reference>
+    </default>
+	<scroller_index_index>
+		<reference name="root">
+			<action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+		</reference>	
+        <reference name="head">
+        	<action method="addCss"><stylesheet>smartaddons/scroller/css/style.css</stylesheet></action>
+        </reference>	
+		<reference name="content">
+			<block type="scroller/list" name="scroller.list.theme">
+				<!--<action method="setConfig">
+					<name>
+						<theme>theme1</theme>						
+					</name>
+				</action>-->
+			</block>
+		</reference>
+	</scroller_index_index>	
+</layout>   
+	
